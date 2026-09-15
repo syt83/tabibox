@@ -54,6 +54,7 @@ export async function uploadPhotoToSupabase({ file, tripId, userId }: UploadPhot
       taken_at: metadata.takenAt,
       latitude: metadata.latitude ?? null,
       longitude: metadata.longitude ?? null,
+      category: "other",
       is_favorite: false,
     })
     .select()

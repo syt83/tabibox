@@ -5,6 +5,7 @@ import type { Photo } from "@/types/photo";
 import { formatCount, formatTripDateRange } from "@/lib/format-utils";
 import { getTripCoverPhotoUrl } from "@/lib/photo-utils";
 import UploadPhotosDialog from "@/components/photos/upload-photos-dialog";
+import CameraCaptureButton from "@/components/photos/camera-capture-button";
 import TripDetailTabs from "./trip-detail-tabs";
 import DeleteTripButton from "./delete-trip-button";
 
@@ -46,6 +47,7 @@ export default function TripDetailView({ trip, photos, photoSource }: TripDetail
         </div>
 
         <div className="flex items-center gap-2">
+          <CameraCaptureButton tripId={trip.id} />
           <UploadPhotosDialog tripId={trip.id} />
           <DeleteTripButton tripId={trip.id} tripTitle={trip.title} photoSource={photoSource} />
         </div>
