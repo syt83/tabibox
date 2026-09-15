@@ -1,5 +1,7 @@
 "use client";
 
+import { createPortal } from "react-dom";
+
 interface DeleteTripDialogProps {
   tripTitle: string;
   onCancel: () => void;
@@ -8,7 +10,10 @@ interface DeleteTripDialogProps {
 }
 
 export default function DeleteTripDialog({ tripTitle, onCancel, onConfirm, deleting }: DeleteTripDialogProps) {
-  return (
+  // Portalled to <body> — rendered inside <main>'s isolated stacking context,
+  // this dialog would otherwise lose taps in BottomNav's screen region to
+  // BottomNav itself (see PhotoViewer for the same fix and why).
+  return createPortal(
     <div
       role="alertdialog"
       aria-modal="true"
@@ -39,6 +44,7 @@ export default function DeleteTripDialog({ tripTitle, onCancel, onConfirm, delet
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

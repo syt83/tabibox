@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { addYear, maxAllowedYear } from "@/lib/year-mutations";
 
@@ -52,8 +53,9 @@ export default function AddYearDialog({ existingYears, onAdded }: AddYearDialogP
         + 연도 추가
       </button>
 
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={resetAndClose}>
+      {open &&
+        createPortal(
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={resetAndClose}>
           <div
             className="w-full max-w-sm rounded-2xl bg-card p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
@@ -123,8 +125,9 @@ export default function AddYearDialog({ existingYears, onAdded }: AddYearDialogP
               </form>
             )}
           </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }

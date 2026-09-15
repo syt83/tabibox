@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import type { Photo } from "@/types/photo";
 import type { UploadDialogStatus, UploadFile } from "@/types/upload";
@@ -159,11 +160,12 @@ export default function UploadPhotosDialog({ tripId }: UploadPhotosDialogProps) 
         + 사진 추가
       </button>
 
-      {open && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-          onClick={status === "uploading" ? undefined : resetAndClose}
-        >
+      {open &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+            onClick={status === "uploading" ? undefined : resetAndClose}
+          >
           <div
             className="w-full max-w-lg rounded-2xl bg-card p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
@@ -269,8 +271,9 @@ export default function UploadPhotosDialog({ tripId }: UploadPhotosDialogProps) 
               )}
             </div>
           </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </>
   );
 }

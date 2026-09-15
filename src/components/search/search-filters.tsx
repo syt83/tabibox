@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import type { SearchFilters } from "@/types/search";
 import { hasActiveFilters } from "@/types/search";
 
@@ -99,31 +100,33 @@ export default function SearchFiltersBar({ years, cities, filters, onChange, onC
         </button>
       </div>
 
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-end bg-black/50 md:hidden"
-          onClick={() => setMobileOpen(false)}
-        >
+      {mobileOpen &&
+        createPortal(
           <div
-            className="w-full rounded-t-2xl bg-card p-5 max-h-[80vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-end bg-black/50 md:hidden"
+            onClick={() => setMobileOpen(false)}
           >
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="font-display text-lg font-bold text-ink">필터</h2>
-              <button onClick={() => setMobileOpen(false)} aria-label="필터 닫기" className="text-subtext">
-                ✕
+            <div
+              className="w-full rounded-t-2xl bg-card p-5 max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="font-display text-lg font-bold text-ink">필터</h2>
+                <button onClick={() => setMobileOpen(false)} aria-label="필터 닫기" className="text-subtext">
+                  ✕
+                </button>
+              </div>
+              {controls}
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="mt-5 w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white hover:bg-primary-dark"
+              >
+                결과 보기
               </button>
             </div>
-            {controls}
-            <button
-              onClick={() => setMobileOpen(false)}
-              className="mt-5 w-full rounded-xl bg-primary py-2.5 text-sm font-semibold text-white hover:bg-primary-dark"
-            >
-              결과 보기
-            </button>
-          </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }
