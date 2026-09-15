@@ -1,9 +1,9 @@
 import { getSearchDataset } from "@/lib/search-data";
 import { getManualYears } from "@/lib/year-data";
-import HomePageClient from "./home-page-client";
+import YearsPageClient from "./years-page-client";
 
-export default async function HomePage() {
+export default async function YearsPage() {
   const [{ trips, photos }, manualYears] = await Promise.all([getSearchDataset(), getManualYears()]);
 
-  return <HomePageClient trips={trips} photos={photos} manualYears={manualYears} />;
+  return <YearsPageClient trips={trips} photos={photos} manualYears={manualYears} />;
 }
