@@ -1,0 +1,11 @@
+
+> japan_app@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 42552, using available port 3001 instead.
+▲ Next.js 16.3.4 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://172.27.192.1:3001
+- Environments: .env.local
+✓ Ready in 5.5s
+✓ Running next.config.ts took 330ms
