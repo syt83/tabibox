@@ -9,6 +9,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { getCurrentUserId } from "@/lib/demo-user";
 import { validateFile, ACCEPTED_FILE_INPUT_ACCEPT } from "@/lib/upload-constraints";
 import { uploadPhotosBatch, type BatchUploadFailure } from "@/lib/photo-upload";
+import { generateId } from "@/lib/uuid";
 import PhotoDropzone from "./photo-dropzone";
 import UploadPreviewGrid from "./upload-preview-grid";
 import UploadProgress from "./upload-progress";
@@ -19,7 +20,7 @@ interface UploadPhotosDialogProps {
 
 function makeUploadFile(file: File): UploadFile {
   return {
-    id: crypto.randomUUID(),
+    id: generateId(),
     file,
     previewUrl: URL.createObjectURL(file),
     status: "pending",

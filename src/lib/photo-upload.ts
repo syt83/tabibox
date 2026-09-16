@@ -3,6 +3,7 @@ import { getSupabaseBrowserClient } from "./supabase/client";
 import { mapPhotoRowToPhoto, type PhotoRow } from "./supabase/mappers";
 import { extractPhotoMetadata } from "./photo-metadata";
 import { extensionForFile } from "./upload-constraints";
+import { generateId } from "./uuid";
 
 const PHOTOS_BUCKET = "photos";
 
@@ -23,7 +24,7 @@ export async function uploadPhotoToSupabase({ file, tripId, userId }: UploadPhot
     throw new Error("Supabase is not configured.");
   }
 
-  const photoId = crypto.randomUUID();
+  const photoId = generateId();
   const extension = extensionForFile(file);
   const storagePath = `${userId}/${tripId}/${photoId}.${extension}`;
 
