@@ -9,6 +9,9 @@ import EmptyState from "@/components/EmptyState";
 export default async function CollectionsPage() {
   const { photos } = await getSearchDataset();
 
+  const favoritePhotos = photos.filter((photo) => photo.isFavorite);
+  const favoriteCover = favoritePhotos[0]?.thumbnailUrl ?? favoritePhotos[0]?.imageUrl;
+
   const categories = PHOTO_CATEGORIES.map((category) => {
     const catPhotos = photos.filter((photo) => photo.category === category);
     return {
@@ -18,7 +21,7 @@ export default async function CollectionsPage() {
     };
   });
 
-  const hasAny = categories.some((c) => c.count > 0);
+  const hasAny = favoritePhotos.length > 0 || categories.some((c) => c.count > 0);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 md:py-12">
@@ -29,6 +32,31 @@ export default async function CollectionsPage() {
         <EmptyState icon="🗂️" title="まだありません" description={"분류된 사진이 없어요."} />
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+          <Link
+            href="/favorites"
+            aria-label="즐겨찾기 모아보기"
+            className="group relative block aspect-square overflow-hidden rounded-2xl bg-card ring-1 ring-primary/20"
+          >
+            {favoriteCover ? (
+              <Image
+                src={favoriteCover}
+                alt="즐겨찾기"
+                fill
+                unoptimized
+                sizes="(min-width: 768px) 22vw, 45vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            ) : (
+              <div className="h-full w-full bg-bg" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+              <div className="text-2xl">♥</div>
+              <div className="font-display font-bold">즐겨찾기</div>
+              <div className="text-xs opacity-80">{formatCount(favoritePhotos.length)}장</div>
+            </div>
+          </Link>
+
           {categories.map(({ category, count, cover }) => {
             const meta = CATEGORY_META[category];
             return (
